@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleModal({ open, setOpen }) {
+export default function SimpleModal({ open, setOpen, formContact }) {
   const classes = useStyles();
 
   const handleClose = () => {
@@ -30,7 +30,9 @@ export default function SimpleModal({ open, setOpen }) {
   const body = (
     <div className={classes.paper}>
       <PlayArrowIcon />
-      <h2 id="simple-modal-title">Video Agregado</h2>
+      <h2 id="simple-modal-title">
+        {formContact === 1 ? `Correo enviado` : `Video Agregado`}
+      </h2>
     </div>
   );
 

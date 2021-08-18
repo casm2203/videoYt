@@ -6,7 +6,10 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { Grid } from "@material-ui/core";
+import { ButtonGroup, Grid, IconButton } from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -15,10 +18,32 @@ const useStyles = makeStyles({
   media: {
     height: 140,
   },
+  actions: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  label: {
+    textTransform: "capitalize",
+  },
 });
 
-export default function MediaCard({ data }) {
+export default function MediaCard({
+  data,
+  setDataToEdit,
+  deleteData,
+  setDataToView,
+}) {
+  let history = useHistory();
   const classes = useStyles();
+  const handleEdit = (el) => {
+    setDataToEdit(el);
+    history.push(`/${el.id}/editar`);
+  };
+
+  const handleView = (el) => {
+    setDataToView(el);
+    history.push(`/${el.id}/ver`);
+  };
 
   return (
     <>
@@ -49,13 +74,26 @@ export default function MediaCard({ data }) {
                 </Typography>
               </CardContent>
             </CardActionArea>
-            <CardActions>
-              <Button size="small" color="primary">
-                Compartir
-              </Button>
-              <Button size="small" color="primary">
+            <CardActions className={classes.actions}>
+              <Button
+                onClick={() => handleView(el)}
+                size="small"
+                color="primary"
+                className={classes.label}
+              >
                 Ver más
               </Button>
+              <ButtonGroup size="small" variant="contained" color="primary">
+                <IconButton onClick={() => handleEdit(el)} aria-label="edit">
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => deleteData(el.id)}
+                  aria-label="delete"
+                >
+                  <DeleteIcon color="secondary" />
+                </IconButton>
+              </ButtonGroup>
             </CardActions>
           </Card>
         </Grid>

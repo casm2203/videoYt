@@ -9,8 +9,10 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import IconButton from "@material-ui/core/IconButton";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import { useHistory } from "react-router-dom";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -38,17 +40,31 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
     margin: "auto",
   },
+  view: {
+    color: "black",
+  },
 }));
 
-const TableYt = ({ data, setDataToEdit, deleteData }) => {
+const TableYt = ({ data, setDataToEdit, deleteData, setDataToView }) => {
   const classes = useStyles();
+  let history = useHistory();
+
+  const handleEdit = (el) => {
+    setDataToEdit(el);
+    history.push(`/${el.id}/editar`);
+  };
+
+  const handleView = (el) => {
+    setDataToView(el);
+    history.push(`/${el.id}/ver`);
+  };
 
   return (
     <TableContainer className={classes.content} component={Paper}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Id </StyledTableCell>
+            {/* <StyledTableCell>Id </StyledTableCell> */}
             <StyledTableCell align="center">Nombre del video</StyledTableCell>
             <StyledTableCell align="center">Descripcion</StyledTableCell>
             <StyledTableCell align="center">Enlace</StyledTableCell>
@@ -58,18 +74,18 @@ const TableYt = ({ data, setDataToEdit, deleteData }) => {
         <TableBody>
           {data.map((el) => (
             <StyledTableRow key={el.id}>
-              <StyledTableCell component="th" scope="row">
+              {/* <StyledTableCell component="th" scope="row">
                 {el.id}
-              </StyledTableCell>
+              </StyledTableCell> */}
               <StyledTableCell align="center">{el.name}</StyledTableCell>
               <StyledTableCell align="center">{el.descripcion}</StyledTableCell>
               <StyledTableCell align="center">{el.enlace}</StyledTableCell>
               <StyledTableCell align="center">
                 <ButtonGroup variant="contained" color="primary">
-                  <IconButton
-                    onClick={() => setDataToEdit(el)}
-                    aria-label="edit"
-                  >
+                  <IconButton onClick={() => handleView(el)} aria-label="view">
+                    <VisibilityIcon className={classes.view} />
+                  </IconButton>
+                  <IconButton onClick={() => handleEdit(el)} aria-label="edit">
                     <EditIcon />
                   </IconButton>
                   <IconButton

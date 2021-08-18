@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,13 +18,25 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  link: {
+    textDecoration: "none",
+    color: "white",
+    marginLeft: "5px",
+  },
+  ButtonLink: {
+    color: "white",
+    textTransform: "capitalize",
+  },
+  ButtonLinkActive: {
+    borderBottom: "0.5px solid white",
+  },
 }));
 
 const Navbar = () => {
   const classes = useStyles();
 
   return (
-    <AppBar className={classes.root} position="static">
+    <AppBar className={classes.root} position="relative">
       <Toolbar>
         <IconButton
           edge="start"
@@ -33,12 +46,44 @@ const Navbar = () => {
         >
           <PlayArrowIcon />
         </IconButton>
-
         <Typography variant="h6" className={classes.title}>
           YouTube Music
         </Typography>
-        <Button color="inherit">Agregar video</Button>
-        <Button color="inherit">Videos</Button>
+
+        <NavLink
+          exact
+          activeClassName={classes.ButtonLinkActive}
+          className={classes.link}
+          to="/"
+        >
+          <Button className={classes.ButtonLink}>Videos</Button>
+        </NavLink>
+
+        <NavLink
+          exact
+          activeClassName={classes.ButtonLinkActive}
+          className={classes.link}
+          to="/agregar"
+        >
+          <Button className={classes.ButtonLink}>Agregar videos</Button>
+        </NavLink>
+
+        <NavLink
+          exact
+          activeClassName={classes.ButtonLinkActive}
+          className={classes.link}
+          to="/nosotros"
+        >
+          <Button className={classes.ButtonLink}>Nosotros</Button>
+        </NavLink>
+        <NavLink
+          exact
+          activeClassName={classes.ButtonLinkActive}
+          className={classes.link}
+          to="/contactame"
+        >
+          <Button className={classes.ButtonLink}>Contactame</Button>
+        </NavLink>
       </Toolbar>
     </AppBar>
   );

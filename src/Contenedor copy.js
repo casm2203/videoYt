@@ -7,16 +7,19 @@ import Loader from "./components/Loader";
 import Message from "./components/Message";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Navbar from "./components/NavBar";
-import { HashRouter, Route, Switch } from "react-router-dom";
-import Error404 from "./pages/Error404";
-import ViewYt from "./components/ViewYt";
-import Nosotros from "./components/Nosotros";
-import FormContactYt from "./components/FormContactYt";
-import ViewGridListYt from "./components/ViewGridListYt";
+import GridOnIcon from "@material-ui/icons/GridOn";
+import ViewColumnIcon from "@material-ui/icons/ViewColumn";
+import IconButton from "@material-ui/core/IconButton";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 const useStyles = makeStyles((theme) => ({
   gridItems: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+  views: {
+    display: "flex",
+    width: "80%",
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
@@ -24,23 +27,18 @@ const useStyles = makeStyles((theme) => ({
     width: "98%",
     margin: "auto",
   },
-  nacbir: {
-    marginBottom: "50px",
-  },
 }));
 
 const Contenedor = () => {
   const classes = useStyles();
   const [db, setDb] = useState(null);
   const [dataToEdit, setDataToEdit] = useState(null);
-  const [dataToView, setDataToView] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [views, setViews] = useState(false);
+  const [views, setViews] = useState(true);
 
   let api = helpHttp(),
-    url = "http://localhost:5000/videos",
-    urlForm = "https://formsubmit.co/ajax/casm2203@gmail.com";
+    url = "http://localhost:5000/videos";
   //cuando utilizas el la variable api te la va a pedir en el useEfect porque es algo que estás utilizando
   //si la colocas dentro del array del useEffect vas a provocar un loop infinito y BOM!
   // una solución es quitar la variable api y utilizar directamente el helpHttp() en el useEfect
@@ -119,97 +117,64 @@ const Contenedor = () => {
   const handleView = () => {
     setViews(!views);
   };
-
-  const sendFormContact = (data) => {
-    let options = {
-      body: data,
-      headers: { "content-type": "application/json" },
-    };
-
-    api.post(urlForm, options).then((res) => {
-      if (!res.err) {
-        setError(null);
-      } else {
-        setError(res);
-      }
-    });
-  };
   return (
-    <HashRouter basename="videos">
-      <Navbar />
-      <Switch>
-        <Route exact path="/">
-          <ViewGridListYt handleView={handleView} />
-          {loading && <Loader />}
-          {error && (
-            // <Error404 />
+    <>
+      <Grid container>
+        <Grid className={classes.gridItems} item xs={12}>
+          <FormYt
+            createData={createData}
+            updateData={updateData}
+            dataToEdit={dataToEdit}
+            setDataToEdit={setDataToEdit}
+          />
+        </Grid>
+        <br />
+        <br />
+        {loading && (
+          <Grid className={classes.gridItems} item xs={12}>
+            <Loader />
+          </Grid>
+        )}
+        {error && (
+          <Grid className={classes.gridItems} item xs={12}>
             <Message
               msg={`Error ${error.status}: ${error.statusText}`}
-              bgColor="red"
+              bgColor="#dc3545"
             />
-          )}
-          <Grid container>
-            {db &&
-              (views ? (
-                <Grid
-                  className={classes.gridView}
-                  justify="flex-start"
-                  container
-                  spacing={2}
-                >
-                  <TableYt
-                    data={db}
-                    setDataToEdit={setDataToEdit}
-                    deleteData={deleteData}
-                    setDataToView={setDataToView}
-                  />
-                </Grid>
-              ) : (
-                <Grid
-                  className={classes.gridView}
-                  justify="flex-start"
-                  container
-                  spacing={2}
-                >
-                  <CardYt
-                    data={db}
-                    setDataToEdit={setDataToEdit}
-                    deleteData={deleteData}
-                    setDataToView={setDataToView}
-                  />
-                </Grid>
-              ))}
           </Grid>
-        </Route>
+        )}
 
-        <Route exact path="/agregar">
-          <FormYt
-            createData={createData}
-            updateData={updateData}
-            dataToEdit={dataToEdit}
-            setDataToEdit={setDataToEdit}
-          />
-        </Route>
-        <Route exact path="/:id/editar">
-          <FormYt
-            createData={createData}
-            updateData={updateData}
-            dataToEdit={dataToEdit}
-            setDataToEdit={setDataToEdit}
-          />
-        </Route>
-        <Route exact path="/:id/ver">
-          <ViewYt dataToView={dataToView} />
-        </Route>
-        <Route exact path="/nosotros">
-          <Nosotros />
-        </Route>
-        <Route exact path="/contactame">
-          <FormContactYt sendFormContact={sendFormContact} />
-        </Route>
-        <Route path="*" children={<Error404 />} />
-      </Switch>
-    </HashRouter>
+        <Grid className={classes.views} container justify="center" xs={12}>
+          <ButtonGroup variant="contained" color="inherit">
+            <IconButton onClick={handleView} aria-label="delete">
+              <GridOnIcon />
+            </IconButton>
+            <IconButton onClick={handleView} aria-label="edit">
+              <ViewColumnIcon />
+            </IconButton>
+          </ButtonGroup>
+        </Grid>
+
+        {db &&
+          (views ? (
+            <TableYt
+              data={db}
+              setDataToEdit={setDataToEdit}
+              deleteData={deleteData}
+            />
+          ) : (
+            <Grid
+              className={classes.gridView}
+              justify="flex-start"
+              container
+              spacing={2}
+            >
+              <CardYt data={db} />
+              {/*<Grid item xs={6} sm={6} md={4} lg={3} xl={2}></Grid>*/}
+            </Grid>
+          ))}
+      </Grid>
+    </>
   );
 };
 

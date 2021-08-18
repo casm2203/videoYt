@@ -5,6 +5,7 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import AddIcon from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
 import SimpleModal from "./SimpleModal";
+import { useHistory } from "react-router-dom";
 
 const initialForm = {
   name: "",
@@ -14,7 +15,10 @@ const initialForm = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  gridItems: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
   content: {
     width: "40%",
     margin: "auto",
@@ -29,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   //   justifyContent: "flex-end",
   // },
   gridButton: {
-    marginTop: "5px",
+    marginTop: "15px",
     display: "flex",
     justifyContent: "space-between",
   },
@@ -39,6 +43,7 @@ const FormYt = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
   const classes = useStyles();
   const [form, setForm] = useState(initialForm);
   const [open, setOpen] = useState(false);
+  let history = useHistory();
 
   useEffect(() => {
     if (dataToEdit) {
@@ -77,22 +82,24 @@ const FormYt = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
   const handleReset = (e) => {
     setForm(initialForm);
     setDataToEdit(null);
+    history.push("/");
   };
 
   return (
-    <Grid>
-      <SimpleModal open={open} setOpen={setOpen} />
-      <Paper className={classes.content} elevation={10}>
+    <Grid className={classes.gridItems} xs={12}>
+      <SimpleModal open={open} setOpen={setOpen} formContact={2} />
+      <Paper className={classes.content} elevation={5}>
         <Grid align="center">
           <Avatar className={classes.avatar}>
             <PlayArrowIcon />
           </Avatar>
-          {dataToEdit ? <h3>Editar Video</h3> : <h3>Agregar Video</h3>}
+          {dataToEdit ? <h2>Editar Video</h2> : <h2>Agregar Video</h2>}
         </Grid>
         <form onSubmit={handleSubmit}>
           <Grid container justify="space-between" spacing={1}>
             <Grid item xs={12}>
               <TextField
+                variant="outlined"
                 label="Nombre del video"
                 placeholder="Nombre del video"
                 value={form.name}
@@ -104,6 +111,7 @@ const FormYt = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                variant="outlined"
                 label="Enlace del video"
                 placeholder="Enlace del video"
                 type="text"
@@ -116,12 +124,15 @@ const FormYt = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                variant="outlined"
                 label="Descripcion"
                 placeholder="Descripcion"
                 type="text"
                 value={form.descripcion}
                 onChange={handleChange}
                 name="descripcion"
+                multiline
+                rows={4}
                 fullWidth
                 required
               />
