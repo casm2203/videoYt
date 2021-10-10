@@ -1,12 +1,6 @@
 {
   "videos": [
     {
-      "id": 2,
-      "name": "PobladoRemix",
-      "descripcion": "no le compraste nada",
-      "enlace": "https://www.youtube.com/watch?v=BNGvdoPv0-o"
-    },
-    {
       "name": "J. Balvin - Ambiente (Official Video)",
       "descripcion": "Escucha lo mejor de J Balvin: https://smarturl.it/jbalvinlomejor  Music video by J. Balvin performing Ambiente. © 2018 UMG Recordings, Inc.",
       "enlace": "https://www.youtube.com/watch?v=rzgw0XldTC0",
@@ -37,34 +31,10 @@
       "id": 11
     },
     {
-      "name": "cristian",
-      "descripcion": "hol",
-      "enlace": "https://www.youtube.com/watch?v=BNGv",
-      "id": 12
-    },
-    {
-      "name": "cristian",
-      "descripcion": "ol",
-      "enlace": "https://www.youtube.com/watch?v=BNGvdoPv0-o",
-      "id": 13
-    },
-    {
-      "name": "cristian",
-      "descripcion": "hol",
-      "enlace": "https://www.youtube.com/watch?v=rzgw0XldTC0",
-      "id": 14
-    },
-    {
-      "name": "andres",
-      "descripcion": "po",
-      "enlace": "https://www.youtube.com/watch?v=rzgw0XldTC0",
-      "id": 15
-    },
-    {
-      "name": "hola",
-      "descripcion": "ui",
-      "enlace": "https://www.youtube.com/watch?v=2WCB1skMrYg",
-      "id": 16
+      "name": "EE.UU. confirma que el coronavirus no fue diseñado como arma biológica",
+      "descripcion": "Las agencias de inteligencia de EE.UU. han descartado que el virus SARS-CoV-2, causante de la pandemia de covid-19, fuera diseñado como un arma biológica, según un resumen de un informe que se hizo público este viernes.",
+      "enlace": "https://www.youtube.com/watch?v=imkkb97eJmc",
+      "id": 17
     }
   ]
 }
