@@ -60,14 +60,15 @@ const Nosotros = () => {
           <Typography align="justify" variant="body1" color="initial">
             Soy actualmente estudiante de Ingeniería de Sistemas en Sexto
             semestre de la Universidad de la costa ubicada en
-            Barranquilla/Colombia, me dedico cómo soporte de primer nivel de una
-            plataforma web omnicanal de atención al cliente de diferentes
-            empresas en colombia y otros paises de latinoamerica. me encargo de
-            brindar soluciones a diferentes requerimientos cómo incidentes,
-            resolución de dudas y solicitudes de ajustes en la instancias. Por
-            otro lado, en estos momentos me encuentro practicando React ya que
-            me apasiona el Front-End por lo que me gustaría adquirir experiencia
-            y más habiliadades que me aporten a ser mejor cada día.
+            Barranquilla/Colombia, me dedico cómo soporte de Software primer
+            nivel a una plataforma web omnicanal de atención al cliente en
+            diferentes empresas de colombia y otros paises de latinoamerica. me
+            encargo de brindar soluciones a diferentes requerimientos cómo
+            incidentes, resolución de dudas y solicitudes de ajustes en la
+            instancias. Por otro lado, en estos momentos me encuentro
+            practicando React ya que me gusta el Front-End por lo que me
+            gustaría adquirir experiencia y habilidades que aporten a ser mejor
+            cada día y al crecimiento de la empresa.
           </Typography>
         </Grid>
 
