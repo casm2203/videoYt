@@ -53,9 +53,9 @@ const FormYt = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
     }
   }, [dataToEdit]);
 
-  const handleModal = () => {
-    setOpen(!open);
-  };
+  // const handleModal = () => {
+  //   setOpen(!open);
+  // };
 
   const handleChange = (e) => {
     setForm({
@@ -63,19 +63,26 @@ const FormYt = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.name || !form.descripcion) {
       alert("Datos incompletos");
       return;
     }
-    if (form.id === null) {
-      createData(form);
-      handleModal();
-    } else {
-      updateData(form);
-    }
+    console.log(form, "handleSub");
 
+    if (dataToEdit) {
+      updateData(form);
+    } else {
+      createData(form);
+    }
+    /*
+ if (form.id !== null) {
+     //handleModal();
+  } else {
+   }
+*/
     handleReset();
   };
 

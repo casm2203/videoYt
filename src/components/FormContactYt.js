@@ -144,7 +144,7 @@ const FormContactYt = ({ sendFormContact }) => {
 
             <Grid className={classes.gridButton} xs={12}>
               <Button
-                variant="outlined"
+                variant="contained"
                 color="primary"
                 startIcon={<SendIcon />}
                 type="submit"

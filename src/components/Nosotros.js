@@ -77,13 +77,19 @@ const Nosotros = () => {
           xs={12}
           justify="center"
         >
-          <img
-            className={classes.cris}
-            src={persona}
-            alt="Persona"
-            width="189"
-            height="170"
-          />
+          <a
+            href="https://www.linkedin.com/in/cristian-suarez2203"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              className={classes.cris}
+              src={persona}
+              alt="Persona"
+              width="189"
+              height="170"
+            />
+          </a>
         </Grid>
         <Grid container justify="start" xs={12}>
           <Typography variant="body1" color="initial">

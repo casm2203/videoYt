@@ -14,6 +14,17 @@ import ViewYt from "./components/ViewYt";
 import Nosotros from "./components/Nosotros";
 import FormContactYt from "./components/FormContactYt";
 import ViewGridListYt from "./components/ViewGridListYt";
+import {
+  collection,
+  //getDocs,
+  addDoc,
+  updateDoc,
+  doc,
+  deleteDoc,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
+import db from "./firebaseyt/firebaseConfig";
 
 const useStyles = makeStyles((theme) => ({
   gridItems: {
@@ -28,94 +39,81 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "50px",
   },
 }));
-
-const Contenedor = () => {
+const Contenedor = ({ modo, setModo }) => {
   const classes = useStyles();
-  const [db, setDb] = useState(null);
+  const [dbs, setDbs] = useState(null);
   const [dataToEdit, setDataToEdit] = useState(null);
   const [dataToView, setDataToView] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [views, setViews] = useState(false);
 
   let api = helpHttp(),
-    url = "http://localhost:5000/videos",
     urlForm = "https://formsubmit.co/ajax/casm2203@gmail.com";
+
   //cuando utilizas el la variable api te la va a pedir en el useEfect porque es algo que estás utilizando
   //si la colocas dentro del array del useEffect vas a provocar un loop infinito y BOM!
   // una solución es quitar la variable api y utilizar directamente el helpHttp() en el useEfect
 
   useEffect(() => {
-    api.get(url).then((res) => {
-      setLoading(true);
-      //Nconsole.log(res)
-      if (!res.err) {
-        setDb(res);
-        setError(null);
-      } else {
-        setDb(null);
-        setError(res);
-      }
-      setLoading(false);
-    });
-  }, [url]);
+    // const obtenerDatos = async () => {
+    //   try {
+    //     const datos = await getDocs(collection(db, "videos"));
+    //     const arrayData = datos.docs.map((doc) => ({
+    //       ...doc.data(),
+    //       id: doc.id,
+    //     }));
+    //     console.log(arrayData);
+    //     setDbs(arrayData);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    // obtenerDatos();
 
-  const createData = (data) => {
-    let options = {
-      body: data,
-      headers: { "content-type": "application/json" },
-    };
-
-    api.post(url, options).then((res) => {
-      console.log(res);
-      if (!res.err) {
-        setDb([...db, res]);
-        setError(null);
-      } else {
-        setError(res);
-      }
+    const q = query(collection(db, "videos"));
+    // eslint-disable-next-line
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const arrayDatas = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      console.log(arrayDatas, "datas");
+      setDbs(arrayDatas);
     });
+  }, []);
+
+  const createData = async (data) => {
+    try {
+      const docRef = await addDoc(collection(db, "videos"), data);
+      // video = { ...data, id: docRef.id };
+      //await updateDoc(doc(db, "videos", video.id), video);
+      console.log("Document written with ID: ", docRef.id);
+      setDbs([...dbs, data]);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
-
-  const updateData = (data) => {
-    let endpoint = `${url}/${data.id}`;
-    let options = {
-      body: data,
-      headers: { "content-type": "application/json" },
-    };
-
-    api.put(endpoint, options).then((res) => {
-      //console.log(res);
-      if (!res.err) {
-        let newData = db.map((el) => (el.id === data.id ? data : el));
-        setDb(newData);
-      } else {
-        setError(res);
-      }
-    });
-  };
-
-  const deleteData = (id) => {
-    let isDelete = window.confirm("estás seguro de eliminar el registro?");
-    if (isDelete) {
-      let options = {
-        headers: { "content-type": "application/json" },
-      };
-      let endpoint = `${url}/${id}`;
-      api.del(endpoint, options).then((res) => {
-        //console.log(res);
-        if (!res.err) {
-          let newData = db.filter((el) => (el.id === id ? null : el));
-          setDb(newData);
-        } else {
-          setError(res);
-        }
-      });
-    } else {
-      return;
+  const updateData = async (data) => {
+    try {
+      const updateVideo = doc(db, "videos", data.id);
+      await updateDoc(updateVideo, data);
+      let newData = dbs.map((el) => (el.id === data.id ? data : el));
+      setDbs(newData);
+    } catch (e) {
+      console.error("Error adding document: ", e);
     }
   };
 
+  const deleteData = async (id) => {
+    try {
+      await deleteDoc(doc(db, "videos", id));
+      let newData = dbs.filter((el) => (el.id === id ? null : el));
+      setDbs(newData);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
   const handleView = () => {
     setViews(!views);
   };
@@ -136,7 +134,7 @@ const Contenedor = () => {
   };
   return (
     <HashRouter basename="videos">
-      <Navbar />
+      <Navbar modo={modo} setModo={setModo} />
       <Switch>
         <Route exact path="/">
           <ViewGridListYt handleView={handleView} />
@@ -149,7 +147,7 @@ const Contenedor = () => {
             />
           )}
           <Grid container>
-            {db &&
+            {dbs &&
               (views ? (
                 <Grid
                   className={classes.gridView}
@@ -158,7 +156,7 @@ const Contenedor = () => {
                   spacing={2}
                 >
                   <TableYt
-                    data={db}
+                    data={dbs}
                     setDataToEdit={setDataToEdit}
                     deleteData={deleteData}
                     setDataToView={setDataToView}
@@ -172,7 +170,7 @@ const Contenedor = () => {
                   spacing={2}
                 >
                   <CardYt
-                    data={db}
+                    data={dbs}
                     setDataToEdit={setDataToEdit}
                     deleteData={deleteData}
                     setDataToView={setDataToView}

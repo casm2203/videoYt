@@ -7,6 +7,8 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import { NavLink } from "react-router-dom";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navbar = () => {
+const Navbar = ({ modo, setModo }) => {
   const classes = useStyles();
 
   return (
@@ -84,6 +86,10 @@ const Navbar = () => {
         >
           <Button className={classes.ButtonLink}>Contactame</Button>
         </NavLink>
+
+        <Button className={classes.ButtonLink} onClick={() => setModo(!modo)}>
+          {modo ? <Brightness7Icon /> : <Brightness4Icon />}
+        </Button>
       </Toolbar>
     </AppBar>
   );
