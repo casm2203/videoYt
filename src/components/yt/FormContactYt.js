@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper, TextField, Button, Typography } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
-import SimpleModal from "./SimpleModal";
+import SimpleModal from "../../pages/SimpleModal";
 
 const useStyles = makeStyles((theme) => ({
   gridItems: {

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import FormYt from "./components/FormYt";
 import TableYt from "./components/TableYt";
-import { helpHttp } from "./helpers/helpHttp";
+import { helpHttp } from "./helpHttp";
 import CardYt from "./components/CardYt";
 import Loader from "./components/Loader";
-import Message from "./components/Message";
+import Message from "../pages/Message";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import GridOnIcon from "@material-ui/icons/GridOn";
@@ -44,6 +44,21 @@ const Contenedor = () => {
   // una solución es quitar la variable api y utilizar directamente el helpHttp() en el useEfect
 
   useEffect(() => {
+    // const obtenerDatos = async () => {
+    //   try {
+    //     const datos = await getDocs(collection(db, "videos"));
+    //     const arrayData = datos.docs.map((doc) => ({
+    //       ...doc.data(),
+    //       id: doc.id,
+    //     }));
+    //     console.log(arrayData);
+    //     setDbs(arrayData);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    // obtenerDatos();
+
     api.get(url).then((res) => {
       setLoading(true);
       //Nconsole.log(res)
@@ -73,6 +88,18 @@ const Contenedor = () => {
         setError(res);
       }
     });
+  };
+  const createData = async (data) => {
+    try {
+      const docRef = await addDoc(collection(db, "videos"), data);
+      //   video = { ...data, id: docRef.id };
+      // await updateDoc(doc(db, "videos", video.id), video);
+      console.log("Document written with ID: ", docRef.id);
+      setDbs([...dbs, { ...data, id: docRef.id }]);
+      console.log(dbs, "aqui vemos la hora de la verdad");
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
 
   const updateData = (data) => {

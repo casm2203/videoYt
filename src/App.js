@@ -1,24 +1,30 @@
-import { React, useState } from "react";
-import Contenedor from "./Contenedor";
+import { React } from "react";
+import { connect } from "react-redux";
+import Contenedor from "./components/Contenedor";
+//UI
 import { ThemeProvider } from "@material-ui/core/styles";
-//import theme from "./temConfig";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
 
-function App() {
-  const [modo, setModo] = useState(false);
+function App({ darkMode }) {
   const theme = createMuiTheme({
     palette: {
-      type: modo ? "dark" : "light",
+      type: darkMode ? "dark" : "light",
     },
   });
-  console.log(modo);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Contenedor modo={modo} setModo={setModo} />
+      <Contenedor />
     </ThemeProvider>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    darkMode: state.darkMode,
+  };
+};
+
+export default connect(mapStateToProps)(App);

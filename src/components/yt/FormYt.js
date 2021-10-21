@@ -4,8 +4,8 @@ import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import AddIcon from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
-import SimpleModal from "./SimpleModal";
 import { useHistory } from "react-router-dom";
+import SimpleModal from "../../pages/SimpleModal";
 
 const initialForm = {
   name: "",
@@ -44,6 +44,7 @@ const FormYt = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
   const [form, setForm] = useState(initialForm);
   const [open, setOpen] = useState(false);
   let history = useHistory();
+  console.log(dataToEdit);
 
   useEffect(() => {
     if (dataToEdit) {

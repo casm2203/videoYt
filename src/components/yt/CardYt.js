@@ -48,7 +48,7 @@ export default function MediaCard({
   return (
     <>
       {data.map((el) => (
-        <Grid item xs={6} sm={6} md={4} lg={3} xl={2}>
+        <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
           <Card className={classes.root}>
             <CardActionArea>
               <iframe
