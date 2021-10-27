@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { updateMode } from "../redux/actions/darkModeAction";
 import { NavLink } from "react-router-dom";
 //UI
+import MaterialUISwitch from "../components/Ui/DarkSwitch";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,8 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
+//import Brightness4Icon from "@mui/icons-material/Brightness4";
+//import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,7 +56,7 @@ const Navbar = ({ darkMode, updateMode }) => {
           <PlayArrowIcon />
         </IconButton>
         <Typography variant="h6" className={classes.title}>
-          YouTube Music
+          YT Music
         </Typography>
 
         <NavLink
@@ -92,14 +93,11 @@ const Navbar = ({ darkMode, updateMode }) => {
         >
           <Button className={classes.ButtonLink}>Contactame</Button>
         </NavLink>
-
-        <Button className={classes.ButtonLink} onClick={updateMode}>
-          {darkMode ? (
-            <Brightness7Icon />
-          ) : (
-            <Brightness4Icon className={classes.darkModeButton} />
-          )}
-        </Button>
+        <MaterialUISwitch
+          sx={{ m: 1 }}
+          checked={!darkMode}
+          onClick={updateMode}
+        />
       </Toolbar>
     </AppBar>
   );

@@ -1,13 +1,16 @@
-import { Button, Grid, makeStyles, Paper, Typography } from "@material-ui/core";
 import React from "react";
 import { NavLink } from "react-router-dom";
+//UI
+import { Button, Grid, makeStyles, Paper, Typography } from "@material-ui/core";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 const useStyles = makeStyles((theme) => ({
   gridItems: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
   content: {
-    width: "60%",
+    width: "80%",
     margin: "auto",
     padding: "20px",
   },
@@ -16,11 +19,12 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     marginLeft: "5px",
   },
-  ButtonLink: {
-    color: "Red",
-  },
   buttonMenu: {
     marginTop: "2rem",
+  },
+  ButtonLink: {
+    background: "red",
+    color: "white",
   },
 }));
 
@@ -28,7 +32,6 @@ const ViewYt = (props) => {
   const classes = useStyles();
   const { name, descripcion, enlace } = props.dataToView;
 
-  //
   return (
     <Grid className={classes.gridItems} xs={12}>
       <Paper className={classes.content} elevation={5}>
@@ -41,7 +44,7 @@ const ViewYt = (props) => {
           <Grid xs={12}>
             <iframe
               width="100%"
-              height="600px"
+              height="500px"
               src={`https://www.youtube.com/embed/${enlace.slice(32)}`}
               title="YouTube video player"
               frameborder="0"
@@ -65,7 +68,14 @@ const ViewYt = (props) => {
               className={classes.link}
               to="/"
             >
-              <Button className={classes.ButtonLink}>Salir</Button>
+              <Button
+                variant="contained"
+                startIcon={<ArrowBackIcon />}
+                className={classes.ButtonLink}
+                size="small"
+              >
+                Salir
+              </Button>
             </NavLink>
           </Grid>
         </Grid>

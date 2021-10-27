@@ -6,20 +6,19 @@ import { helpHttp } from "../helpers/helpHttp";
 import Message from "../pages/Message";
 import Error404 from "../pages/Error404";
 import Nosotros from "./Nosotros";
+import CardYtSkeleton from "./Yt/CardYtSkeleton";
 //UI
-import RingLoader from "react-spinners/RingLoader";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { css } from "@emotion/react";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 //componentes de Yt
-import TableYt from "./yt/TableYt";
-import FormYt from "./yt/FormYt";
-import CardYt from "./yt/CardYt";
-import ViewYt from "./yt/ViewYt";
-import FormContactYt from "./yt/FormContactYt";
-import ViewGridListYt from "./yt/ViewGridListYt";
+import TableYt from "./Yt/TableYt";
+import FormYt from "./Yt/FormYt";
+import CardYt from "./Yt/CardYt";
+import ViewYt from "./Yt/ViewYt";
+import FormContactYt from "./Yt/FormContactYt";
+import ViewGridListYt from "./Yt/ViewGridListYt";
 //Firebase
 import {
   collection,
@@ -41,19 +40,8 @@ const useStyles = makeStyles((theme) => ({
     width: "98%",
     margin: "auto",
   },
-  nacbir: {
-    marginBottom: "50px",
-  },
-  lodingStyle: {
-    margin: "0,auto",
-    background: "red",
-  },
 }));
-const override = css`
-  display: block;
-  margin: 20px auto;
-  border-color: red;
-`;
+
 const Contenedor = () => {
   const classes = useStyles();
   const [dbs, setDbs] = useState(null);
@@ -78,7 +66,6 @@ const Contenedor = () => {
         id: doc.id,
       }));
       setDbs(arrayDatas);
-      console.log(arrayDatas, "datas");
       setLoading(true);
     });
   }, []);
@@ -101,6 +88,7 @@ const Contenedor = () => {
       console.error("Error adding document: ", e);
     }
   };
+
   const deleteData = async (id) => {
     try {
       await deleteDoc(doc(db, "videos", id));
@@ -128,11 +116,10 @@ const Contenedor = () => {
       }
     });
   };
-  console.log(matches);
+
   return (
     <HashRouter basename="videos">
       {matches ? <Navbar /> : <NavLite />}
-
       <Switch>
         <Route exact path="/">
           {error && (
@@ -142,9 +129,9 @@ const Contenedor = () => {
               bgColor={color}
             />
           )}
+          <ViewGridListYt handleView={handleView} />
           {loading ? (
             <Grid container>
-              <ViewGridListYt handleView={handleView} />
               {dbs &&
                 (views ? (
                   <Grid
@@ -172,12 +159,13 @@ const Contenedor = () => {
                       setDataToEdit={setDataToEdit}
                       deleteData={deleteData}
                       setDataToView={setDataToView}
+                      updateData={updateData}
                     />
                   </Grid>
                 ))}
             </Grid>
           ) : (
-            <RingLoader css={override} color={color} size={100} />
+            <CardYtSkeleton />
           )}
         </Route>
 

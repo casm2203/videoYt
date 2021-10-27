@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import AddIcon from "@material-ui/icons/Add";
+import Save from "@material-ui/icons/Save";
 import ClearIcon from "@material-ui/icons/Clear";
 import { useHistory } from "react-router-dom";
 import SimpleModal from "../../pages/SimpleModal";
@@ -12,6 +12,7 @@ const initialForm = {
   descripcion: "",
   enlace: "",
   id: null,
+  likes: 0,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   content: {
-    width: "40%",
+    width: "80%",
     margin: "auto",
     padding: "20px",
   },
@@ -160,7 +161,7 @@ const FormYt = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
               <Button
                 variant="contained"
                 color="secondary"
-                startIcon={<AddIcon />}
+                startIcon={<Save />}
                 type="submit"
               >
                 Guardar

@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
+
+//UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { ButtonGroup, Grid, IconButton } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useHistory } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Badge from "@mui/material/Badge";
 
 const useStyles = makeStyles({
   root: {
@@ -25,16 +34,25 @@ const useStyles = makeStyles({
   label: {
     textTransform: "capitalize",
   },
+  styleCardContent: {
+    padding: "10px",
+  },
 });
 
-export default function MediaCard({
+const MediaCard = ({
   data,
   setDataToEdit,
   deleteData,
   setDataToView,
-}) {
+  updateData,
+}) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const ITEM_HEIGHT = 48;
+
   let history = useHistory();
   const classes = useStyles();
+
   const handleEdit = (el) => {
     setDataToEdit(el);
     history.push(`/${el.id}/editar`);
@@ -45,10 +63,23 @@ export default function MediaCard({
     history.push(`/${el.id}/ver`);
   };
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const increment = (el) => {
+    let sum = el.likes + 1;
+    const dataAumentLike = { ...el, likes: sum };
+    updateData(dataAumentLike);
+  };
+
   return (
     <>
       {data.map((el) => (
-        <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
           <Card className={classes.root}>
             <CardActionArea>
               <iframe
@@ -60,7 +91,7 @@ export default function MediaCard({
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
               ></iframe>
-              <CardContent>
+              <CardContent className={classes.styleCardContent}>
                 <Typography gutterBottom variant="h5" noWrap component="h5">
                   {el.name}
                 </Typography>
@@ -80,24 +111,79 @@ export default function MediaCard({
                 size="small"
                 color="primary"
                 className={classes.label}
+                variant="contained"
               >
-                Ver más
+                Ver
               </Button>
-              <ButtonGroup size="small" variant="contained" color="primary">
-                <IconButton onClick={() => handleEdit(el)} aria-label="edit">
-                  <EditIcon />
+              <div>
+                <IconButton
+                  onClick={() => increment(el)}
+                  aria-label="add to favorites"
+                >
+                  <Badge badgeContent={el.likes} color="primary">
+                    <FavoriteIcon color="error" />
+                  </Badge>
+                </IconButton>
+                <IconButton aria-label="Copy">
+                  <ContentCopyIcon color="action" />
                 </IconButton>
                 <IconButton
-                  onClick={() => deleteData(el.id)}
-                  aria-label="delete"
+                  aria-label="more"
+                  id="long-button"
+                  aria-controls="long-menu"
+                  aria-expanded={open ? "true" : undefined}
+                  aria-haspopup="true"
+                  onClick={handleClick}
                 >
-                  <DeleteIcon color="secondary" />
+                  <MoreVertIcon color="primary" />
                 </IconButton>
-              </ButtonGroup>
+                <Menu
+                  id="long-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "long-button",
+                  }}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  PaperProps={{
+                    style: {
+                      maxHeight: ITEM_HEIGHT * 4,
+                      width: "15ch",
+                    },
+                  }}
+                >
+                  <MenuItem divider onClick={handleClose}>
+                    <Button
+                      onClick={() => handleEdit(el)}
+                      startIcon={<EditIcon color="primary" />}
+                      size="small"
+                      className={classes.label}
+                    >
+                      <Typography color="primary" component="p">
+                        Editar
+                      </Typography>
+                    </Button>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <Button
+                      onClick={() => deleteData(el.id)}
+                      aria-label="delete"
+                      startIcon={<DeleteIcon color="secondary" />}
+                      className={classes.label}
+                    >
+                      <Typography color="secondary" component="p">
+                        Eliminar
+                      </Typography>
+                    </Button>
+                  </MenuItem>
+                </Menu>
+              </div>
             </CardActions>
           </Card>
         </Grid>
       ))}
     </>
   );
-}
+};
+
+export default MediaCard;

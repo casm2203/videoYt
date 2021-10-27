@@ -34,14 +34,11 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   table: {
-    minWidth: 600,
+    minWidth: 800,
   },
   content: {
     width: "80%",
     margin: "auto",
-  },
-  view: {
-    color: "black",
   },
 }));
 
@@ -83,7 +80,7 @@ const TableYt = ({ data, setDataToEdit, deleteData, setDataToView }) => {
               <StyledTableCell align="center">
                 <ButtonGroup variant="contained" color="primary">
                   <IconButton onClick={() => handleView(el)} aria-label="view">
-                    <VisibilityIcon className={classes.view} />
+                    <VisibilityIcon className={classes.view} color="action" />
                   </IconButton>
                   <IconButton onClick={() => handleEdit(el)} aria-label="edit">
                     <EditIcon />

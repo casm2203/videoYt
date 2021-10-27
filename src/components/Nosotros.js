@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   content: {
-    width: "50%",
+    width: "70%", // 70 mobile 50desk
     margin: "auto",
     padding: "20px",
   },
