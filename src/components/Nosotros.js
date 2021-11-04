@@ -1,55 +1,76 @@
 import React from "react";
+import { connect } from "react-redux";
+import { updateResponsive } from "../redux/actions/responsiveAction";
+
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import Checkbox from "@mui/material/Checkbox";
+
 import persona from "../assets/cris.jpg";
 import sutherland from "../assets/sutherland.png";
 import gocargo from "../assets/gocargo.png";
 import sagicc from "../assets/sagicc.jpg";
 import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  gridItems: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-  content: {
-    width: "70%", // 70 mobile 50desk
-    margin: "auto",
-    padding: "20px",
-  },
-  link: {
-    textDecoration: "none",
-    color: "white",
-    marginLeft: "5px",
-  },
-  ButtonLink: {
-    color: "Red",
-  },
-  buttonMenu: {
-    marginTop: "2rem",
-  },
-  contentTitle: {
-    justifyContent: "center",
-    marginBottom: "20px",
-  },
-  name: {
-    background: "red",
-    borderRadius: "0.25rem",
-    color: "white",
-    padding: "5px",
-  },
-  contentCris: {
-    marginTop: "20px",
-    marginBottom: "20px",
-  },
-  cris: {
-    borderRadius: "50%",
-  },
-}));
+const Nosotros = ({ responsive, updateResponsive }) => {
+  const useStyles = makeStyles((theme) => ({
+    gridItems: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+    content: {
+      width: responsive ? "50%" : "80%", // 70 mobile 50desk
+      margin: "auto",
+      padding: "20px",
+    },
+    link: {
+      textDecoration: "none",
+      color: "white",
+      marginLeft: "5px",
+    },
+    ButtonLink: {
+      color: "Red",
+    },
+    buttonMenu: {
+      marginTop: "2rem",
+    },
+    contentTitle: {
+      justifyContent: "center",
+      marginBottom: "20px",
+    },
+    name: {
+      background: "red",
+      borderRadius: "0.25rem",
+      color: "white",
+      padding: "5px",
+    },
+    contentCris: {
+      marginTop: "20px",
+      marginBottom: "20px",
+    },
+    cris: {
+      borderRadius: "50%",
+    },
+  }));
 
-const Nosotros = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const handleChange = () => {
+    const update = updateResponsive;
+
+    console.log(matches, "holaaaa match");
+  };
+
   return (
     <Grid className={classes.gridItems} xs={12}>
       <Paper className={classes.content} elevation={5}>
+        <Checkbox
+          checked={matches}
+          onChange={handleChange()}
+          inputProps={{ "aria-label": "controlled" }}
+        />
         <Grid className={classes.contentTitle} container xs={12}>
           <Typography variant="h4" color="initial">
             Hola <span className={classes.name}>Soy Cristian Suarez</span>,
@@ -116,4 +137,15 @@ const Nosotros = () => {
     </Grid>
   );
 };
-export default Nosotros;
+const mapStateToProps = (state) => {
+  return {
+    responsive: state.responsive,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateResponsive: () => dispatch(updateResponsive()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nosotros);

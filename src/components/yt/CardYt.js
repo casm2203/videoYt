@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 //UI
 import Card from "@material-ui/core/Card";
@@ -19,6 +20,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Badge from "@mui/material/Badge";
+import Snackbar from "@mui/material/Snackbar";
+import { Alert } from "@mui/material";
 
 const useStyles = makeStyles({
   root: {
@@ -48,6 +51,7 @@ const MediaCard = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [copied, setCopied] = useState(false);
   const ITEM_HEIGHT = 48;
 
   let history = useHistory();
@@ -74,6 +78,14 @@ const MediaCard = ({
     let sum = el.likes + 1;
     const dataAumentLike = { ...el, likes: sum };
     updateData(dataAumentLike);
+  };
+
+  const handleCloseNotify = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setCopied(false);
   };
 
   return (
@@ -124,9 +136,22 @@ const MediaCard = ({
                     <FavoriteIcon color="error" />
                   </Badge>
                 </IconButton>
-                <IconButton aria-label="Copy">
-                  <ContentCopyIcon color="action" />
-                </IconButton>
+                <CopyToClipboard
+                  text={el.enlace}
+                  onCopy={() => setCopied(true)}
+                >
+                  <IconButton aria-label="Copy">
+                    <ContentCopyIcon color="action" />
+                  </IconButton>
+                </CopyToClipboard>
+                <Snackbar
+                  open={copied}
+                  autoHideDuration={2000}
+                  onClose={handleCloseNotify}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                >
+                  <Alert severity="info">Copiado al portapapeles</Alert>
+                </Snackbar>
                 <IconButton
                   aria-label="more"
                   id="long-button"

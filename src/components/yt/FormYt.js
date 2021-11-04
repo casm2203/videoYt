@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
@@ -15,32 +16,37 @@ const initialForm = {
   likes: 0,
 };
 
-const useStyles = makeStyles((theme) => ({
-  gridItems: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-  content: {
-    width: "80%",
-    margin: "auto",
-    padding: "20px",
-  },
-  avatar: {
-    backgroundColor: "red",
-  },
-  // gridButton: { esto sirve para cuando se ocupa todo el espacio mandar el contenido al fondo en caso de solo ser uno
-  //   marginTop: "5px",
-  //   display: "flex",
-  //   justifyContent: "flex-end",
-  // },
-  gridButton: {
-    marginTop: "15px",
-    display: "flex",
-    justifyContent: "space-between",
-  },
-}));
-
-const FormYt = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
+const FormYt = ({
+  createData,
+  updateData,
+  dataToEdit,
+  setDataToEdit,
+  responsive,
+}) => {
+  const useStyles = makeStyles((theme) => ({
+    gridItems: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+    content: {
+      width: responsive ? "50%" : "80%",
+      margin: "auto",
+      padding: "20px",
+    },
+    avatar: {
+      backgroundColor: "red",
+    },
+    // gridButton: { esto sirve para cuando se ocupa todo el espacio mandar el contenido al fondo en caso de solo ser uno
+    //   marginTop: "5px",
+    //   display: "flex",
+    //   justifyContent: "flex-end",
+    // },
+    gridButton: {
+      marginTop: "15px",
+      display: "flex",
+      justifyContent: "space-between",
+    },
+  }));
   const classes = useStyles();
   const [form, setForm] = useState(initialForm);
   const [open, setOpen] = useState(false);
@@ -173,5 +179,9 @@ const FormYt = ({ createData, updateData, dataToEdit, setDataToEdit }) => {
     </Grid>
   );
 };
-
-export default FormYt;
+const mapStateToProps = (state) => {
+  return {
+    responsive: state.responsive,
+  };
+};
+export default connect(mapStateToProps)(FormYt);

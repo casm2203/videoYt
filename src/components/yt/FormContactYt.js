@@ -1,37 +1,9 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper, TextField, Button, Typography } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import SimpleModal from "../../pages/SimpleModal";
-
-const useStyles = makeStyles((theme) => ({
-  gridItems: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-  content: {
-    width: "80%", //50 para desktop 70mobile
-    margin: "auto",
-    padding: "20px",
-  },
-  avatar: {
-    backgroundColor: "red",
-  },
-  // gridButton: { esto sirve para cuando se ocupa todo el espacio mandar el contenido al fondo en caso de solo ser uno
-  //   marginTop: "5px",
-  //   display: "flex",
-  //   justifyContent: "flex-end",
-  // },
-  gridButton: {
-    marginTop: "20px",
-    marginBottom: "20px",
-    display: "flex",
-    justifyContent: "center",
-  },
-  //   mensaje: {
-  //     height: "100px",
-  //   },
-}));
 
 const initialForm = {
   name: "",
@@ -40,7 +12,36 @@ const initialForm = {
   correo: "",
 };
 
-const FormContactYt = ({ sendFormContact }) => {
+const FormContactYt = ({ sendFormContact, responsive }) => {
+  const useStyles = makeStyles((theme) => ({
+    gridItems: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+    content: {
+      width: responsive ? "50%" : "80%", //50 para desktop 70mobile
+      margin: "auto",
+      padding: "20px",
+    },
+    avatar: {
+      backgroundColor: "red",
+    },
+    // gridButton: { esto sirve para cuando se ocupa todo el espacio mandar el contenido al fondo en caso de solo ser uno
+    //   marginTop: "5px",
+    //   display: "flex",
+    //   justifyContent: "flex-end",
+    // },
+    gridButton: {
+      marginTop: "20px",
+      marginBottom: "20px",
+      display: "flex",
+      justifyContent: "center",
+    },
+    //   mensaje: {
+    //     height: "100px",
+    //   },
+  }));
+
   const classes = useStyles();
   const [openn, setOpenn] = useState(false);
 
@@ -158,5 +159,9 @@ const FormContactYt = ({ sendFormContact }) => {
     </Grid>
   );
 };
-
-export default FormContactYt;
+const mapStateToProps = (state) => {
+  return {
+    responsive: state.responsive,
+  };
+};
+export default connect(mapStateToProps)(FormContactYt);
