@@ -1,11 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { updateResponsive } from "../redux/actions/responsiveAction";
-
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
-import Checkbox from "@mui/material/Checkbox";
-
 import persona from "../assets/cris.jpg";
 import sutherland from "../assets/sutherland.png";
 import gocargo from "../assets/gocargo.png";
@@ -19,7 +13,7 @@ const Nosotros = ({ responsive, updateResponsive }) => {
       marginBottom: theme.spacing(1),
     },
     content: {
-      width: responsive ? "50%" : "80%", // 70 mobile 50desk
+      width: responsive ? "50%" : "80%",
       margin: "auto",
       padding: "20px",
     },
@@ -54,30 +48,17 @@ const Nosotros = ({ responsive, updateResponsive }) => {
   }));
 
   const classes = useStyles();
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("sm"));
-
-  const handleChange = () => {
-    const update = updateResponsive;
-
-    console.log(matches, "holaaaa match");
-  };
 
   return (
-    <Grid className={classes.gridItems} xs={12}>
+    <Grid className={classes.gridItems}>
       <Paper className={classes.content} elevation={5}>
-        <Checkbox
-          checked={matches}
-          onChange={handleChange()}
-          inputProps={{ "aria-label": "controlled" }}
-        />
-        <Grid className={classes.contentTitle} container xs={12}>
+        <Grid className={classes.contentTitle} container>
           <Typography variant="h4" color="initial">
             Hola <span className={classes.name}>Soy Cristian Suarez</span>,
             Mucho gusto.
           </Typography>
         </Grid>
-        <Grid container justify="center" xs={12}>
+        <Grid container justify="center">
           <Typography align="justify" variant="body1" color="initial">
             Soy actualmente estudiante de Ingeniería de Sistemas en Sexto
             semestre de la Universidad de la costa ubicada en
@@ -93,12 +74,7 @@ const Nosotros = ({ responsive, updateResponsive }) => {
           </Typography>
         </Grid>
 
-        <Grid
-          className={classes.contentCris}
-          container
-          xs={12}
-          justify="center"
-        >
+        <Grid className={classes.contentCris} container justify="center">
           <a
             href="https://www.linkedin.com/in/cristian-suarez2203"
             target="_blank"
@@ -113,12 +89,12 @@ const Nosotros = ({ responsive, updateResponsive }) => {
             />
           </a>
         </Grid>
-        <Grid container justify="start" xs={12}>
+        <Grid container>
           <Typography variant="body1" color="initial">
             <b>Mis experiencias:</b>
           </Typography>
         </Grid>
-        <Grid container xs={12} justify="space-around">
+        <Grid container justify="space-around">
           <a
             href="https://www.sutherlandglobal.com/"
             target="_blank"
@@ -142,10 +118,5 @@ const mapStateToProps = (state) => {
     responsive: state.responsive,
   };
 };
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateResponsive: () => dispatch(updateResponsive()),
-  };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Nosotros);
+export default connect(mapStateToProps)(Nosotros);

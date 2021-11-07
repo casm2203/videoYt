@@ -12,10 +12,10 @@ const initialForm = {
   name: "",
   descripcion: "",
   enlace: "",
+  enlaceEmbed: "",
   id: null,
   likes: 0,
 };
-
 const FormYt = ({
   createData,
   updateData,
@@ -47,11 +47,12 @@ const FormYt = ({
       justifyContent: "space-between",
     },
   }));
+
   const classes = useStyles();
   const [form, setForm] = useState(initialForm);
   const [open, setOpen] = useState(false);
   let history = useHistory();
-  console.log(dataToEdit);
+  console.log(classes, "hente");
 
   useEffect(() => {
     if (dataToEdit) {
@@ -74,16 +75,18 @@ const FormYt = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(e.target.enlaceEmbed.value, "validando donde aparece");
     if (!form.name || !form.descripcion) {
       alert("Datos incompletos");
       return;
     }
+    //setForm({ ...form, enlaceEmbed: e.target.enlaceEmbed.value });
     console.log(form, "handleSub");
 
     if (dataToEdit) {
-      updateData(form);
+      updateData({ ...form, enlaceEmbed: e.target.enlaceEmbed.value });
     } else {
-      createData(form);
+      createData({ ...form, enlaceEmbed: e.target.enlaceEmbed.value });
     }
     /*
  if (form.id !== null) {
@@ -101,7 +104,7 @@ const FormYt = ({
   };
 
   return (
-    <Grid className={classes.gridItems} xs={12}>
+    <Grid className={classes.gridItems} item xs={12}>
       <SimpleModal open={open} setOpen={setOpen} formContact={2} />
       <Paper className={classes.content} elevation={5}>
         <Grid align="center">
@@ -140,6 +143,18 @@ const FormYt = ({
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
+                label="Enlace del video"
+                placeholder="Enlace del video"
+                type="text"
+                value={form.enlace.slice(32)}
+                name="enlaceEmbed"
+                fullWidth
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
                 label="Descripcion"
                 placeholder="Descripcion"
                 type="text"
@@ -153,7 +168,7 @@ const FormYt = ({
               />
             </Grid>
 
-            <Grid item className={classes.gridButton} xs={12}>
+            <Grid className={classes.gridButton} item xs={12}>
               <Button
                 variant="contained"
                 color="primary"

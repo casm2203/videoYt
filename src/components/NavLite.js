@@ -150,7 +150,9 @@ const NavLite = ({ darkMode, updateMode }) => {
               checked={!darkMode}
               onClick={updateMode}
             />
-            <Typography variant="p">{darkMode ? "Claro" : "Oscuro"}</Typography>
+            <Typography variant="body1">
+              {darkMode ? "Claro" : "Oscuro"}
+            </Typography>
           </MenuItem>
         </Menu>
       </Toolbar>

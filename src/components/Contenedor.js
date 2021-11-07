@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import Navbar from "./NavBar";
 import NavLite from "./NavLite";
@@ -6,8 +6,10 @@ import { helpHttp } from "../helpers/helpHttp";
 import Message from "../pages/Message";
 import Error404 from "../pages/Error404";
 import Nosotros from "./Nosotros";
-import CardYtSkeleton from "./Yt/CardYtSkeleton";
+import { updateResponsive } from "../redux/actions/responsiveAction";
+import { connect } from "react-redux";
 //UI
+import CardYtSkeleton from "./Yt/CardYtSkeleton";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@mui/material/styles";
@@ -42,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Contenedor = () => {
+const Contenedor = ({ updateResponsive }) => {
   const classes = useStyles();
   const [dbs, setDbs] = useState(null);
   const [dataToEdit, setDataToEdit] = useState(null);
@@ -53,6 +55,13 @@ const Contenedor = () => {
   const [color] = useState("red");
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+
+  // eslint-disable-next-line
+  const update = useCallback(() => updateResponsive(), [matches]);
+  useEffect(() => {
+    update();
+    //console.log(responsive, "repsonsisss");
+  }, [update]);
 
   let api = helpHttp(),
     urlForm = "https://formsubmit.co/ajax/casm2203@gmail.com";
@@ -134,12 +143,7 @@ const Contenedor = () => {
             <Grid container>
               {dbs &&
                 (views ? (
-                  <Grid
-                    className={classes.gridView}
-                    justify="flex-start"
-                    container
-                    spacing={2}
-                  >
+                  <Grid className={classes.gridView} container spacing={2}>
                     <TableYt
                       data={dbs}
                       setDataToEdit={setDataToEdit}
@@ -148,12 +152,7 @@ const Contenedor = () => {
                     />
                   </Grid>
                 ) : (
-                  <Grid
-                    className={classes.gridView}
-                    justify="flex-start"
-                    container
-                    spacing={2}
-                  >
+                  <Grid className={classes.gridView} container spacing={2}>
                     <CardYt
                       data={dbs}
                       setDataToEdit={setDataToEdit}
@@ -186,7 +185,7 @@ const Contenedor = () => {
           />
         </Route>
         <Route exact path="/:id/ver">
-          <ViewYt dataToView={dataToView} />
+          <ViewYt dataToView={dataToView} data={dbs} />
         </Route>
         <Route exact path="/nosotros">
           <Nosotros />
@@ -199,5 +198,14 @@ const Contenedor = () => {
     </HashRouter>
   );
 };
-
-export default Contenedor;
+const mapStateToProps = (state) => {
+  return {
+    responsive: state.responsive,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateResponsive: () => dispatch(updateResponsive()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Contenedor);

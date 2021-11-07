@@ -19,7 +19,7 @@ const FormContactYt = ({ sendFormContact, responsive }) => {
       marginBottom: theme.spacing(1),
     },
     content: {
-      width: responsive ? "50%" : "80%", //50 para desktop 70mobile
+      width: responsive ? "50%" : "80%",
       margin: "auto",
       padding: "20px",
     },
@@ -85,7 +85,7 @@ const FormContactYt = ({ sendFormContact, responsive }) => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="Body" align="center" color="initial">
+              <Typography variant="body1" color="initial">
                 Hola, si quieres conocerme puedes enviar un email
               </Typography>
             </Grid>
@@ -143,7 +143,7 @@ const FormContactYt = ({ sendFormContact, responsive }) => {
               />
             </Grid>
 
-            <Grid className={classes.gridButton} xs={12}>
+            <Grid className={classes.gridButton} item xs={12}>
               <Button
                 variant="contained"
                 color="primary"

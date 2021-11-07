@@ -25,7 +25,7 @@ import { Alert } from "@mui/material";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    //maxWidth: 345,
   },
   media: {
     height: 140,
@@ -91,7 +91,7 @@ const MediaCard = ({
   return (
     <>
       {data.map((el) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+        <Grid key={el.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
           <Card className={classes.root}>
             <CardActionArea>
               <iframe
@@ -99,9 +99,9 @@ const MediaCard = ({
                 height="200"
                 src={`https://www.youtube.com/embed/${el.enlace.slice(32)}`}
                 title="YouTube video player"
-                frameborder="0"
+                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
+                allowFullScreen
               ></iframe>
               <CardContent className={classes.styleCardContent}>
                 <Typography gutterBottom variant="h5" noWrap component="h5">
