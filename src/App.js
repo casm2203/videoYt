@@ -1,6 +1,6 @@
 import { React } from "react";
 import { connect } from "react-redux";
-import Contenedor from "./components/Contenedor";
+import Contenedor from "./componentsYt/Contenedor";
 //UI
 import { ThemeProvider } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
