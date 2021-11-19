@@ -58,12 +58,20 @@ const Navbar = ({ darkMode, updateMode }) => {
         <Typography variant="h6" className={classes.title}>
           YT Music
         </Typography>
-
         <NavLink
           exact
           activeClassName={classes.ButtonLinkActive}
           className={classes.link}
           to="/"
+        >
+          <Button className={classes.ButtonLink}>Inicio</Button>
+        </NavLink>
+
+        <NavLink
+          exact
+          activeClassName={classes.ButtonLinkActive}
+          className={classes.link}
+          to="/videos"
         >
           <Button className={classes.ButtonLink}>Videos</Button>
         </NavLink>

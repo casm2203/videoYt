@@ -111,6 +111,16 @@ const NavLite = ({ darkMode, updateMode }) => {
               className={classes.link}
               to="/"
             >
+              Inicio
+            </NavLink>
+          </MenuItem>
+          <MenuItem divider onClick={handleClose}>
+            <NavLink
+              exact
+              activeClassName={classes.ButtonLinkActive}
+              className={classes.link}
+              to="/videos"
+            >
               Videos
             </NavLink>
           </MenuItem>

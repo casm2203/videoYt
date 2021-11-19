@@ -33,6 +33,7 @@ import {
   query,
 } from "firebase/firestore";
 import db from "../firebaseyt/firebaseConfig";
+import Home from "./Home/Home";
 
 const useStyles = makeStyles((theme) => ({
   gridItems: {
@@ -128,10 +129,13 @@ const Contenedor = ({ updateResponsive }) => {
   };
 
   return (
-    <HashRouter basename="videos">
+    <HashRouter>
       {matches ? <Navbar /> : <NavLite />}
       <Switch>
         <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/videos">
           {error && (
             // <Error404 />
             <Message
@@ -168,7 +172,6 @@ const Contenedor = ({ updateResponsive }) => {
             <CardYtSkeleton />
           )}
         </Route>
-
         <Route exact path="/agregar">
           <FormYt
             createData={createData}
