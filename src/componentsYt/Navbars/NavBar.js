@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { updateMode } from "../redux/actions/darkModeAction";
+import { updateMode } from "../../redux/actions/darkModeAction";
 import { NavLink } from "react-router-dom";
 //UI
-import MaterialUISwitch from "../componentsYt/Ui/DarkSwitch";
+import MaterialUISwitch from "../Ui/DarkSwitch";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";

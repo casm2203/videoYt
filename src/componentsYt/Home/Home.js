@@ -1,11 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Grid, makeStyles, Paper } from "@material-ui/core";
-import Box from "@mui/material/Box";
-import CardHome from "./view/CardHome";
-import Typography from "@mui/material/Typography";
-import DescriptionHome from "./view/DescriptionHome";
+//Components
 import FormContactYt from "../Yt/FormContactYt";
+import DescriptionHome from "./view/DescriptionHome";
+import CardHome from "./view/CardHome";
+import Yo from "./view/Yo";
+//UI
+import Box from "@mui/material/Box";
+import { Grid, makeStyles, Paper } from "@material-ui/core";
+import Typography from "@mui/material/Typography";
 
 const backgroundImage =
   "https://img.olhardigital.com.br/wp-content/uploads/2021/07/YouTube-iPhone-1000x450.jpg";
@@ -23,7 +26,7 @@ const Home = () => {
       marginBottom: theme.spacing(5),
     },
     gridHome: {
-      width: "60%",
+      width: "80%",
       margin: "auto",
       marginTop: theme.spacing(5),
       marginBottom: theme.spacing(5),
@@ -108,15 +111,15 @@ const Home = () => {
             imgUrl="https://img.icons8.com/ios/50/000000/submit-document.png"
           />
         </Grid>
-        <Grid container justify="center" className={classes.gridHome}>
+
+        <Yo />
+        <Grid container justify="center">
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="h5" align="center">
-              <b>Trabaja conmigo XD</b>
+              <b>Charlemos XD</b>
             </Typography>
+            <FormContactYt />
           </Grid>
-        </Grid>
-        <Grid container justify="center">
-          <FormContactYt />
         </Grid>
       </Paper>
     </Grid>

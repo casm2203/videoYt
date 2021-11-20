@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { updateMode } from "../redux/actions/darkModeAction";
+import { updateMode } from "../../redux/actions/darkModeAction";
 import { NavLink } from "react-router-dom";
 //UI
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,7 +13,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Box } from "@mui/system";
-import MaterialUISwitch from "./Ui/DarkSwitch";
+import MaterialUISwitch from "../Ui/DarkSwitch";
 
 const ITEM_HEIGHT = 60;
 

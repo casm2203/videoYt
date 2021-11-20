@@ -33,7 +33,7 @@ const DescriptionHome = () => {
           align="center"
           sx={{ color: "red" }}
         >
-          <b>Yt Music 🎧</b>
+          <b>YT Music </b>🎧
         </Typography>
         <Typography
           variant="body1"

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
-import Navbar from "./NavBar";
-import NavLite from "./NavLite";
+import Navbar from "./Navbars/NavBar";
+import NavLite from "./Navbars/NavLite";
 import { helpHttp } from "../helpers/helpHttp";
 import Message from "../pages/Message";
 import Error404 from "../pages/Error404";

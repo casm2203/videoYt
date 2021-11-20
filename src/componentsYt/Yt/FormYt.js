@@ -143,8 +143,8 @@ const FormYt = ({
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                label="Enlace del video"
-                placeholder="Enlace del video"
+                label="Enlace del video embebido"
+                placeholder="Enlace del video embebido"
                 type="text"
                 value={form.enlace.slice(32)}
                 name="enlaceEmbed"
