@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { updateMode } from "../../redux/actions/darkModeAction";
+import { updateSesion } from "./../../redux/actions/sesionAction";
 import { NavLink } from "react-router-dom";
 //UI
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,6 +15,9 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Box } from "@mui/system";
 import MaterialUISwitch from "../Ui/DarkSwitch";
+//Firebase
+import { auth } from "./../../firebaseyt/firebaseConfig";
+import { signOut } from "firebase/auth";
 
 const ITEM_HEIGHT = 60;
 
@@ -55,8 +59,18 @@ const NavLite = ({ darkMode, updateMode }) => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const logOut = () => {
+    handleClose();
+    signOut(auth)
+      .then(() => {
+        updateSesion({});
+      })
+      .catch((error) => {});
   };
 
   return (
@@ -154,6 +168,38 @@ const NavLite = ({ darkMode, updateMode }) => {
               Contactame
             </NavLink>
           </MenuItem>
+          <MenuItem divider onClick={handleClose}>
+            <NavLink
+              exact
+              activeClassName={classes.ButtonLinkActive}
+              className={classes.link}
+              to="/iniciarsesion"
+            >
+              Iniciar Sesion
+            </NavLink>
+          </MenuItem>
+          <MenuItem divider onClick={handleClose}>
+            <NavLink
+              exact
+              activeClassName={classes.ButtonLinkActive}
+              className={classes.link}
+              to="/registrarme"
+            >
+              Registrarme
+            </NavLink>
+          </MenuItem>
+          <MenuItem divider onClick={handleClose}>
+            <NavLink
+              exact
+              activeClassName={classes.ButtonLinkActive}
+              className={classes.link}
+              to="/"
+              onClick={() => logOut()}
+            >
+              Cerrar sesion
+            </NavLink>
+          </MenuItem>
+
           <MenuItem onClick={handleClose}>
             <MaterialUISwitch
               sx={{ m: 1 }}

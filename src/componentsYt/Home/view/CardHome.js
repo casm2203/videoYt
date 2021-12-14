@@ -1,20 +1,26 @@
+//UI
 import { Grid } from "@material-ui/core";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  cardHome: {
+    display: "flex",
+    width: "97%",
+    margin: "2%",
+    justifyContent: "space-around",
+  },
+}));
 
 const CardHome = ({ title, subtitle, imgUrl }) => {
+  const classes = useStyles();
+
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-      <Card
-        sx={{
-          display: "flex",
-          width: "97%",
-          margin: "2%",
-          justifyContent: "space-around",
-        }}
-      >
+      <Card className={classes.cardHome}>
         <CardContent>
           <Typography component="div" variant="h6">
             <b>{title}</b>
@@ -33,7 +39,6 @@ const CardHome = ({ title, subtitle, imgUrl }) => {
           sx={{
             width: "40%",
             padding: "2%",
-
             left: 0,
             right: 0,
             top: 0,

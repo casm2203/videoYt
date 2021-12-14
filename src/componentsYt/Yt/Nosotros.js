@@ -1,12 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import persona from "../assets/cris.jpg";
-import sutherland from "../assets/sutherland.png";
-import gocargo from "../assets/gocargo.png";
-import sagicc from "../assets/sagicc.jpg";
+//IMG
+import persona from "../../assets/cris.jpg";
+import sutherland from "../../assets/sutherland.png";
+import gocargo from "../../assets/gocargo.png";
+import sagicc from "../../assets/sagicc.jpg";
+//UI
 import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
 
-const Nosotros = ({ responsive, updateResponsive }) => {
+const Nosotros = ({ responsive }) => {
   const useStyles = makeStyles((theme) => ({
     gridItems: {
       marginTop: theme.spacing(1),
@@ -113,6 +115,8 @@ const Nosotros = ({ responsive, updateResponsive }) => {
     </Grid>
   );
 };
+
+//Redux State
 const mapStateToProps = (state) => {
   return {
     responsive: state.responsive,

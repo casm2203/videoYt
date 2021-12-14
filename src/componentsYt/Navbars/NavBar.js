@@ -11,35 +11,10 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-//import Brightness4Icon from "@mui/icons-material/Brightness4";
-//import Brightness7Icon from "@mui/icons-material/Brightness7";
+import UserMenu from "../login/UserMenu";
+import LoginStyles from "../Style/StylesYt";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: "red",
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  link: {
-    textDecoration: "none",
-    color: "white",
-    marginLeft: "5px",
-  },
-  ButtonLink: {
-    color: "white",
-    textTransform: "capitalize",
-  },
-  ButtonLinkActive: {
-    borderBottom: "0.5px solid white",
-  },
-  darkModeButton: {
-    color: "#303030",
-  },
-}));
+const useStyles = makeStyles(LoginStyles);
 
 const Navbar = ({ darkMode, updateMode }) => {
   const classes = useStyles();
@@ -101,6 +76,7 @@ const Navbar = ({ darkMode, updateMode }) => {
         >
           <Button className={classes.ButtonLink}>Contactame</Button>
         </NavLink>
+        <UserMenu />
         <MaterialUISwitch
           sx={{ m: 1 }}
           checked={!darkMode}
@@ -110,7 +86,7 @@ const Navbar = ({ darkMode, updateMode }) => {
     </AppBar>
   );
 };
-
+//Redux State
 const mapStateToProps = (state) => {
   return {
     darkMode: state.darkMode,

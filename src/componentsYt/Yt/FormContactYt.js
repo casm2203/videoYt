@@ -26,20 +26,13 @@ const FormContactYt = ({ sendFormContact, responsive }) => {
     avatar: {
       backgroundColor: "red",
     },
-    // gridButton: { esto sirve para cuando se ocupa todo el espacio mandar el contenido al fondo en caso de solo ser uno
-    //   marginTop: "5px",
-    //   display: "flex",
-    //   justifyContent: "flex-end",
-    // },
+
     gridButton: {
       marginTop: "20px",
       marginBottom: "20px",
       display: "flex",
       justifyContent: "center",
     },
-    //   mensaje: {
-    //     height: "100px",
-    //   },
   }));
 
   const classes = useStyles();
@@ -159,6 +152,7 @@ const FormContactYt = ({ sendFormContact, responsive }) => {
     </Grid>
   );
 };
+//Redux State
 const mapStateToProps = (state) => {
   return {
     responsive: state.responsive,

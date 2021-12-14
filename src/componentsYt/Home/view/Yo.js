@@ -1,4 +1,5 @@
 import React from "react";
+//UI
 import { Grid, makeStyles } from "@material-ui/core";
 import Typography from "@mui/material/Typography";
 import persona from "../../../assets/cris.jpg";

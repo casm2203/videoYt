@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+//UI
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import Save from "@material-ui/icons/Save";
 import ClearIcon from "@material-ui/icons/Clear";
-import { useHistory } from "react-router-dom";
-import SimpleModal from "../../pages/SimpleModal";
 
 const initialForm = {
   name: "",
@@ -36,11 +36,6 @@ const FormYt = ({
     avatar: {
       backgroundColor: "red",
     },
-    // gridButton: { esto sirve para cuando se ocupa todo el espacio mandar el contenido al fondo en caso de solo ser uno
-    //   marginTop: "5px",
-    //   display: "flex",
-    //   justifyContent: "flex-end",
-    // },
     gridButton: {
       marginTop: "15px",
       display: "flex",
@@ -50,9 +45,7 @@ const FormYt = ({
 
   const classes = useStyles();
   const [form, setForm] = useState(initialForm);
-  const [open, setOpen] = useState(false);
   let history = useHistory();
-  console.log(classes, "hente");
 
   useEffect(() => {
     if (dataToEdit) {
@@ -61,10 +54,6 @@ const FormYt = ({
       setForm(initialForm);
     }
   }, [dataToEdit]);
-
-  // const handleModal = () => {
-  //   setOpen(!open);
-  // };
 
   const handleChange = (e) => {
     setForm({
@@ -80,32 +69,23 @@ const FormYt = ({
       alert("Datos incompletos");
       return;
     }
-    //setForm({ ...form, enlaceEmbed: e.target.enlaceEmbed.value });
-    console.log(form, "handleSub");
 
     if (dataToEdit) {
       updateData({ ...form, enlaceEmbed: e.target.enlaceEmbed.value });
     } else {
       createData({ ...form, enlaceEmbed: e.target.enlaceEmbed.value });
     }
-    /*
- if (form.id !== null) {
-     //handleModal();
-  } else {
-   }
-*/
     handleReset();
   };
 
   const handleReset = (e) => {
     setForm(initialForm);
     setDataToEdit(null);
-    history.push("/");
+    history.push("/videos");
   };
 
   return (
     <Grid className={classes.gridItems} item xs={12}>
-      <SimpleModal open={open} setOpen={setOpen} formContact={2} />
       <Paper className={classes.content} elevation={5}>
         <Grid align="center">
           <Avatar className={classes.avatar}>
@@ -194,6 +174,8 @@ const FormYt = ({
     </Grid>
   );
 };
+
+//Redux state
 const mapStateToProps = (state) => {
   return {
     responsive: state.responsive,

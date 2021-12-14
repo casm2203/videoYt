@@ -5,7 +5,7 @@ import NavLite from "./Navbars/NavLite";
 import { helpHttp } from "../helpers/helpHttp";
 import Message from "../pages/Message";
 import Error404 from "../pages/Error404";
-import Nosotros from "./Nosotros";
+import Nosotros from "./Yt/Nosotros";
 import { updateResponsive } from "../redux/actions/responsiveAction";
 import { connect } from "react-redux";
 //UI
@@ -21,7 +21,9 @@ import CardYt from "./Yt/CardYt";
 import ViewYt from "./Yt/ViewYt";
 import FormContactYt from "./Yt/FormContactYt";
 import ViewGridListYt from "./Yt/ViewGridListYt";
-
+import Home from "./Home/Home";
+import Registro from "./login/Registro";
+import InicioSesion from "./login/InicioSesion";
 //Firebase
 import {
   collection,
@@ -32,8 +34,7 @@ import {
   onSnapshot,
   query,
 } from "firebase/firestore";
-import db from "../firebaseyt/firebaseConfig";
-import Home from "./Home/Home";
+import { db } from "../firebaseyt/firebaseConfig";
 
 const useStyles = makeStyles((theme) => ({
   gridItems: {
@@ -62,7 +63,6 @@ const Contenedor = ({ updateResponsive }) => {
   const update = useCallback(() => updateResponsive(), [matches]);
   useEffect(() => {
     update();
-    //console.log(responsive, "repsonsisss");
   }, [update]);
 
   let api = helpHttp(),
@@ -197,14 +197,23 @@ const Contenedor = ({ updateResponsive }) => {
         <Route exact path="/contactame">
           <FormContactYt sendFormContact={sendFormContact} />
         </Route>
+        <Route exact path="/iniciarsesion">
+          <InicioSesion />
+        </Route>
+        <Route exact path="/registrarme">
+          <Registro />
+        </Route>
         <Route path="*" children={<Error404 />} />
       </Switch>
     </HashRouter>
   );
 };
+
+//Redux State
 const mapStateToProps = (state) => {
   return {
     responsive: state.responsive,
+    sesion: state.sesion,
   };
 };
 const mapDispatchToProps = (dispatch) => {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-
+import { connect } from "react-redux";
 //UI
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -48,6 +48,7 @@ const MediaCard = ({
   deleteData,
   setDataToView,
   updateData,
+  sesionActiva,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -152,16 +153,18 @@ const MediaCard = ({
                 >
                   <Alert severity="info">Copiado al portapapeles</Alert>
                 </Snackbar>
-                <IconButton
-                  aria-label="more"
-                  id="long-button"
-                  aria-controls="long-menu"
-                  aria-expanded={open ? "true" : undefined}
-                  aria-haspopup="true"
-                  onClick={handleClick}
-                >
-                  <MoreVertIcon color="primary" />
-                </IconButton>
+                {sesionActiva.email && (
+                  <IconButton
+                    aria-label="more"
+                    id="long-button"
+                    aria-controls="long-menu"
+                    aria-expanded={open ? "true" : undefined}
+                    aria-haspopup="true"
+                    onClick={handleClick}
+                  >
+                    <MoreVertIcon color="primary" />
+                  </IconButton>
+                )}
                 <Menu
                   id="long-menu"
                   MenuListProps={{
@@ -210,5 +213,11 @@ const MediaCard = ({
     </>
   );
 };
+//Redux State
+const mapStateToProps = (state) => {
+  return {
+    sesionActiva: state.sesion.sesionActiva,
+  };
+};
 
-export default MediaCard;
+export default connect(mapStateToProps)(MediaCard);

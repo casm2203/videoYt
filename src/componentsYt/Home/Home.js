@@ -125,6 +125,8 @@ const Home = () => {
     </Grid>
   );
 };
+
+//Redux State
 const mapStateToProps = (state) => {
   return {
     responsive: state.responsive,

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { connect } from "react-redux";
 //UI
 import { Button, Grid, makeStyles, Paper, Typography } from "@material-ui/core";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useLocation } from "react-router-dom";
-
+//Firebase
 import { collection, query, where, onSnapshot } from "firebase/firestore";
-import db from "../../firebaseyt/firebaseConfig";
-import { connect } from "react-redux";
+import { db } from "../../firebaseyt/firebaseConfig";
 
 const ViewYt = ({ dataToView, responsive }) => {
   const useStyles = makeStyles((theme) => ({
@@ -33,6 +33,7 @@ const ViewYt = ({ dataToView, responsive }) => {
       color: "white",
     },
   }));
+
   const classes = useStyles();
   const [vidio, setVidio] = useState([]);
   let location = useLocation();
@@ -101,6 +102,7 @@ const ViewYt = ({ dataToView, responsive }) => {
     </Grid>
   );
 };
+//Redux state
 const mapStateToProps = (state) => {
   return {
     responsive: state.responsive,
